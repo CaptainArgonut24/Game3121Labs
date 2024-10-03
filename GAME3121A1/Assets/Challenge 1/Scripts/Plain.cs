@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class PlayerControllerX : MonoBehaviour
+public class Plain : MonoBehaviour
 {
     public float speed;
     public float rotationSpeed;
@@ -29,3 +29,4 @@ public partial class PlayerControllerX : MonoBehaviour
         transform.Rotate(-Vector3.right * rotationSpeed * verticalInput * Time.deltaTime);
     }
 }
+

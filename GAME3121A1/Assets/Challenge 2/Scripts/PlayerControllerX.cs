@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControllerX : MonoBehaviour
+public partial class PlayerControllerX : MonoBehaviour
 {
     public GameObject dogPrefab;
 
