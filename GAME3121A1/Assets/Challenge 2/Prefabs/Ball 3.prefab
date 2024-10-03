@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f880a64e2c84b0a8be42be264f9bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dog: {fileID: 0}
+  Dog: {fileID: 8241448880393145375, guid: 3e5fe95e580114a5f8f8348678e77463, type: 3}
 --- !u!114 &7945815000853930381
 MonoBehaviour:
   m_ObjectHideFlags: 0
