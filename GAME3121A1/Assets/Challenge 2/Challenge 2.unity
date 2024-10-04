@@ -532,7 +532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dogPrefab: {fileID: 8241448880393145375, guid: 3e5fe95e580114a5f8f8348678e77463, type: 3}
-  actuationDelay: 0.5
+  actuationDelay: 0.1
 --- !u!1 &455978623
 GameObject:
   m_ObjectHideFlags: 0
