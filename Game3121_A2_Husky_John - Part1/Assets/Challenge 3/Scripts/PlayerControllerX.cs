@@ -103,19 +103,30 @@ public class PlayerControllerX : MonoBehaviour
             playerAudio.PlayOneShot(explodeSound, 1.0f);
             gameOver = true;
             Debug.Log("Game Over!");
-            Destroy(other.gameObject);
-        } 
 
+            Destroy(other.gameObject); // Destroy the bomb immediately
+
+            // Start a coroutine to destroy the player after effects
+            StartCoroutine(DestroyPlayerAfterEffects());
+        }
         // if player collides with money, fireworks
         else if (other.gameObject.CompareTag("Money"))
         {
             fireworksParticle.Play();
             playerAudio.PlayOneShot(moneySound, 1.0f);
             Destroy(other.gameObject);
-
         }
-
     }
+
+    // Coroutine to destroy the player object after a short delay
+    private IEnumerator DestroyPlayerAfterEffects()
+    {
+        yield return new WaitForSeconds(1.5f); // Adjust the delay as needed
+        Destroy(gameObject); // Remove the player object
+    }
+
+
+
     //Q 6. boundary check func
     public void BoundaryCheck()
     {
@@ -143,3 +154,5 @@ public class PlayerControllerX : MonoBehaviour
     }
 
 }
+
+
