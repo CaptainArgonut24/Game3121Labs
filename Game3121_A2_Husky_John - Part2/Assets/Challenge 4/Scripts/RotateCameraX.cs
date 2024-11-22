@@ -29,7 +29,7 @@ public class RotateCameraX : MonoBehaviour
     void Update()
     {
         
-        transform.Rotate(new float3(0, 1, 0), Look.ReadValue<Vector2>().x * speed * Time.deltaTime);
+        transform.Rotate(new float3(0, 1, 0), Look.ReadValue<float2>().x * speed * Time.deltaTime);
         
 
         transform.position = player.transform.position; // Move focal point with player

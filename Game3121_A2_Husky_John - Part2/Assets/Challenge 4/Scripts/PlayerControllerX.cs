@@ -75,7 +75,7 @@ public class PlayerControllerX : MonoBehaviour
 
     void FixedUpdate()
     {
-        float2 moveInput = move.ReadValue<Vector2>();
+        float2 moveInput = move.ReadValue<float2>();
 
         float3 forward = new float3(focalPoint.transform.forward.x, 0, focalPoint.transform.forward.z);
         float3 forceDirection = forward * moveInput.y * speed * Time.fixedDeltaTime;
