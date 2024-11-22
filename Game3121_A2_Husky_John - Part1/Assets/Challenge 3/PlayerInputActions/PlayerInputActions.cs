@@ -28,7 +28,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ""id"": ""e8b77ca9-0bbf-4054-b1c3-b09dc93cfc8a"",
             ""actions"": [
                 {
-                    ""name"": ""FloatUp"",
+                    ""name"": ""BOP"",
                     ""type"": ""Button"",
                     ""id"": ""8fa793bb-9801-4f89-a2c1-a892eea5b3a2"",
                     ""expectedControlType"": ""Button"",
@@ -45,7 +45,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""FloatUp"",
+                    ""action"": ""BOP"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee974875-612d-48c3-bba3-1e6585313b16"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BOP"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -56,7 +67,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_FloatUp = m_Player.FindAction("FloatUp", throwIfNotFound: true);
+        m_Player_BOP = m_Player.FindAction("BOP", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -118,12 +129,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     // Player
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_FloatUp;
+    private readonly InputAction m_Player_BOP;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @FloatUp => m_Wrapper.m_Player_FloatUp;
+        public InputAction @BOP => m_Wrapper.m_Player_BOP;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -133,16 +144,16 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
-            @FloatUp.started += instance.OnFloatUp;
-            @FloatUp.performed += instance.OnFloatUp;
-            @FloatUp.canceled += instance.OnFloatUp;
+            @BOP.started += instance.OnBOP;
+            @BOP.performed += instance.OnBOP;
+            @BOP.canceled += instance.OnBOP;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
         {
-            @FloatUp.started -= instance.OnFloatUp;
-            @FloatUp.performed -= instance.OnFloatUp;
-            @FloatUp.canceled -= instance.OnFloatUp;
+            @BOP.started -= instance.OnBOP;
+            @BOP.performed -= instance.OnBOP;
+            @BOP.canceled -= instance.OnBOP;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -162,6 +173,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public PlayerActions @Player => new PlayerActions(this);
     public interface IPlayerActions
     {
-        void OnFloatUp(InputAction.CallbackContext context);
+        void OnBOP(InputAction.CallbackContext context);
     }
 }

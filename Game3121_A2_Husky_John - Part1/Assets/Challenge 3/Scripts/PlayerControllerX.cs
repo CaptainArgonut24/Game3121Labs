@@ -40,7 +40,7 @@ public class PlayerControllerX : MonoBehaviour
     private void OnEnable()
     {
         Debug.Log("Input Actions Enabled");
-        playerMovement = playerInputAction.Player.FloatUp;
+        playerMovement = playerInputAction.Player.BOP;
         playerInputAction.Enable();
         playerMovement.performed += FloatUp;
     }

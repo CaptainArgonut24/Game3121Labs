@@ -6,7 +6,7 @@
             "id": "e8b77ca9-0bbf-4054-b1c3-b09dc93cfc8a",
             "actions": [
                 {
-                    "name": "FloatUp",
+                    "name": "BOP",
                     "type": "Button",
                     "id": "8fa793bb-9801-4f89-a2c1-a892eea5b3a2",
                     "expectedControlType": "Button",
@@ -23,7 +23,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "FloatUp",
+                    "action": "BOP",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ee974875-612d-48c3-bba3-1e6585313b16",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BOP",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
