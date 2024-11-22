@@ -16,8 +16,7 @@ public class SpawnManagerX : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //is creating a new random number generator (rng) using Unity.Mathematics.Random,
-        //and it is initializing it with a seed derived from the current system time.
+        
         rng = new Unity.Mathematics.Random((uint)System.DateTime.Now.Ticks);
 
         //Q 3. changed from prawns to spawn
@@ -28,9 +27,7 @@ public class SpawnManagerX : MonoBehaviour
     // Spawn obstacles
     void SpawnObjects ()
     {
-        // Set random spawn location and random object index
-        //Vector3 spawnLocation = new Vector3(30, Random.Range(5, 15), 0);
-        //int index = Random.Range(0, objectPrefabs.Length);
+        
 
         float3 spawnLocation = new float3(30, GenerateRandomFloat(5, 15), 0);
         int index = GenerateRandomInt(0, objectPrefabs.Length);

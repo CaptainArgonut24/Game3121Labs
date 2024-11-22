@@ -22,7 +22,7 @@ public class EnemyX : MonoBehaviour
     {
         // Set enemy direction towards player goal and move there
         float3 lookDirection = math.normalize((float3)(playerGoal.transform.position - transform.position));
-        enemyRb.AddForce((Vector3)(lookDirection * speed * Time.deltaTime));
+        enemyRb.AddForce((float3)(lookDirection * speed * Time.deltaTime));
     }
 
     private void OnCollisionEnter(Collision other)

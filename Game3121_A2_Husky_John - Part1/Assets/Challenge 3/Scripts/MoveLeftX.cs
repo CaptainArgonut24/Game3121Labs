@@ -22,7 +22,6 @@ public class MoveLeftX : MonoBehaviour
         //Q 2. added ! to make it move
         if (!playerControllerScript.gameOver)
         {
-            //transform.Translate(Vector3.left * speed * Time.deltaTime, Space.World);
             //left direction
             float3 moveDirection = new float3(-1, 0, 0);
             float3 movement = moveDirection * speed * Time.deltaTime;

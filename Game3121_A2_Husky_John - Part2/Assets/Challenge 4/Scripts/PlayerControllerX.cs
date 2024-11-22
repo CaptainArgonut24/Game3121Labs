@@ -25,25 +25,24 @@ public class PlayerControllerX : MonoBehaviour
 
     public GameObject BoostEffect;
     public ParticleSystem BoostParticles;
-    
+
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         focalPoint = GameObject.Find("Focal Point");
     }
+
     void Awake()
     {
         PlayerInputActions = new PlayerInputActions();
-        
+
         Boost = PlayerInputActions.Player.Boost;
         move = PlayerInputActions.Player.Move;
 
         BoostEffect = GameObject.Find("Smoke_Particle");
         if (BoostEffect != null)
-        BoostParticles = BoostEffect.GetComponent<ParticleSystem>();
-        
+            BoostParticles = BoostEffect.GetComponent<ParticleSystem>();
     }
-
 
     void OnEnable()
     {
@@ -52,12 +51,8 @@ public class PlayerControllerX : MonoBehaviour
 
     void BoostPowerup()
     {
-
         playerRb.AddForce(focalPoint.transform.forward * BoostStrength, ForceMode.Force);
-        
     }
-
-
 
     void OnDisable()
     {
@@ -67,25 +62,25 @@ public class PlayerControllerX : MonoBehaviour
     void Update()
     {
         // Add force to player in direction of the focal point (and camera)
-        powerupIndicator.transform.position = transform.position + new Vector3(0, -0.6f, 0);
+        powerupIndicator.transform.position = (float3)transform.position + new float3 (0, -0.6f, 0);
 
         if (Boost.IsPressed())
         {
-           BoostPowerup();
-           BoostEffect.transform.position = transform.position;
-           BoostParticles.Play();
+            BoostPowerup();
+            BoostEffect.transform.position = transform.position;
+            BoostParticles.Play();
         }
-
     }
+
+
     void FixedUpdate()
     {
         float2 moveInput = move.ReadValue<Vector2>();
 
-        
         float3 forward = new float3(focalPoint.transform.forward.x, 0, focalPoint.transform.forward.z);
         float3 forceDirection = forward * moveInput.y * speed * Time.fixedDeltaTime;
 
-        playerRb.AddForce((Vector3)forceDirection, ForceMode.Force);
+        playerRb.AddForce(forceDirection, ForceMode.Force);
     }
 
     // If Player collides with powerup, activate powerup
@@ -126,7 +121,4 @@ public class PlayerControllerX : MonoBehaviour
             }
         }
     }
-
-
-
 }

@@ -45,14 +45,14 @@ public class SpawnManagerX : MonoBehaviour
         // If no powerups remain, spawn a powerup
         if (GameObject.FindGameObjectsWithTag("Powerup").Length == 0) // check that there are zero powerups
         {
-            Instantiate(powerupPrefab, (Vector3)(GenerateSpawnPosition() + powerupSpawnOffset), powerupPrefab.transform.rotation);
+            Instantiate(powerupPrefab, (float3)(GenerateSpawnPosition() + powerupSpawnOffset), powerupPrefab.transform.rotation);
         }
 
         // Spawn number of enemy balls based on wave number
         //Q 4. changed from 2 to enemiesToSpawn
         for (int i = 0; i < enemiesToSpawn; i++)
         {
-            var o = Instantiate(enemyPrefab, (Vector3)GenerateSpawnPosition(), enemyPrefab.transform.rotation);
+            var o = Instantiate(enemyPrefab, (float3)GenerateSpawnPosition(), enemyPrefab.transform.rotation);
             EnemyX enemyX = o.GetComponent<EnemyX>();
             enemyX.speed = waveCount * 5;
         }
@@ -65,9 +65,9 @@ public class SpawnManagerX : MonoBehaviour
     // Move player back to position in front of own goal
     void ResetPlayerPosition ()
     {
-        player.transform.position = new Vector3(0, 1, -7);
-        player.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        player.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        player.transform.position = new float3(0, 1, -7);
+        player.GetComponent<Rigidbody>().velocity = float3.zero;
+        player.GetComponent<Rigidbody>().angularVelocity = float3.zero;
 
     }
 
