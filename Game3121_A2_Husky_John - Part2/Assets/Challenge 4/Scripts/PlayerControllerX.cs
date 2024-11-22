@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Mathematics;
@@ -14,8 +13,9 @@ public class PlayerControllerX : MonoBehaviour
     public bool hasPowerup;
     public GameObject powerupIndicator;
     public PlayerInputActions PlayerInputActions;
-    public InputAction Boost;
     private InputAction move;
+    private InputAction moveB;
+    public InputAction Boost;
     public int powerUpDuration = 5;
 
     private float normalStrength = 10; // how hard to hit enemy without powerup
@@ -25,6 +25,9 @@ public class PlayerControllerX : MonoBehaviour
 
     public GameObject BoostEffect;
     public ParticleSystem BoostParticles;
+
+    private float moveInput = 0f; // For forward movement
+    private bool isMovingBackward = false; // Track backward movement
 
     void Start()
     {
@@ -38,6 +41,7 @@ public class PlayerControllerX : MonoBehaviour
 
         Boost = PlayerInputActions.Player.Boost;
         move = PlayerInputActions.Player.Move;
+        moveB = PlayerInputActions.Player.MoveB;
 
         BoostEffect = GameObject.Find("Smoke_Particle");
         if (BoostEffect != null)
@@ -47,23 +51,46 @@ public class PlayerControllerX : MonoBehaviour
     void OnEnable()
     {
         PlayerInputActions.Enable();
-    }
-
-    void BoostPowerup()
-    {
-        playerRb.AddForce(focalPoint.transform.forward * BoostStrength, ForceMode.Force);
+        move.performed += OnMoveInput;
+        move.canceled += OnMoveInput;
+        moveB.performed += OnMoveBackwardInput;
+        moveB.canceled += OnMoveBackwardInput;
     }
 
     void OnDisable()
     {
+        move.performed -= OnMoveInput;
+        move.canceled -= OnMoveInput;
+        moveB.performed -= OnMoveBackwardInput;
+        moveB.canceled -= OnMoveBackwardInput;
         PlayerInputActions.Disable();
+    }
+
+    void OnMoveInput(InputAction.CallbackContext context)
+    {
+        // Forward movement logic
+        moveInput = context.ReadValue<float>();
+    }
+
+    void OnMoveBackwardInput(InputAction.CallbackContext context)
+    {
+        // Track whether MoveB is being pressed
+        isMovingBackward = context.ReadValue<float>() > 0;
+    }
+
+    void BoostPowerup()
+    {
+        // Apply boost in the forward direction
+        float3 forward = math.normalize(new float3(focalPoint.transform.forward.x, 0, focalPoint.transform.forward.z));
+        playerRb.AddForce(forward * BoostStrength, ForceMode.Force);
     }
 
     void Update()
     {
-        // Add force to player in direction of the focal point (and camera)
-        powerupIndicator.transform.position = (float3)transform.position + new float3 (0, -0.6f, 0);
+        // Update powerup indicator position
+        powerupIndicator.transform.position = (float3)transform.position + new float3(0, -0.6f, 0);
 
+        // Boost logic
         if (Boost.IsPressed())
         {
             BoostPowerup();
@@ -72,14 +99,20 @@ public class PlayerControllerX : MonoBehaviour
         }
     }
 
-
     void FixedUpdate()
     {
-        float2 moveInput = move.ReadValue<float2>();
+        // Calculate forward movement direction relative to the focal point
+        float3 forward = math.normalize(new float3(focalPoint.transform.forward.x, 0, focalPoint.transform.forward.z));
 
-        float3 forward = new float3(focalPoint.transform.forward.x, 0, focalPoint.transform.forward.z);
-        float3 forceDirection = forward * moveInput.y * speed * Time.fixedDeltaTime;
+        // Determine the force direction based on forward or backward input
+        float3 forceDirection = forward * moveInput * speed * Time.fixedDeltaTime;
 
+        if (isMovingBackward)
+        {
+            forceDirection = -forward * speed * Time.fixedDeltaTime; // Reverse direction for MoveB
+        }
+
+        // Apply the calculated force to the player Rigidbody
         playerRb.AddForce(forceDirection, ForceMode.Force);
     }
 
@@ -109,7 +142,7 @@ public class PlayerControllerX : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             Rigidbody enemyRigidbody = other.gameObject.GetComponent<Rigidbody>();
-            float3 awayFromPlayer = other.gameObject.transform.position - transform.position;
+            float3 awayFromPlayer = math.normalize((float3)(other.gameObject.transform.position - transform.position));
 
             if (hasPowerup) // if have powerup hit enemy with powerup force
             {
